@@ -27,7 +27,8 @@ def index():
 
 @app.route('/<name>')
 def user(name):
-    return '<h1>Hello, {}!</h1>'.format(name)
+    templateData={'name':name}
+    return render_template('helloworld.html',**templateData)
 
 
 @app.route('/favicon.ico')
