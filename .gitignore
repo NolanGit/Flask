@@ -5,6 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
+flask.config
 nohup.out
 # Distribution / packaging
 .Python
