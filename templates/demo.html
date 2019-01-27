@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-    <head>
-        <meta http-equiv="refresh" content="1" />
-    </head>
+{% extends "base.html" %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
     <p style="text-align: center"><img src="../static/fu.png" align="middle"></p>
     <h1 style="text-align: center">{{name}}过年好！</h1>
     <h2 style="text-align: center">当前时间是: {{ time }}</h2>
     <h2 style="text-align: center">距离过年还有: {{ count_days }} 天 {{ count_hours }} 小时 {{ count_minutes }} 分 {{ count_seconds }} 秒</h2>
-</html>
+{% endblock %}
