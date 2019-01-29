@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Nolan Sun's Site{% endblock %}
+
+{% block page_content %}
+    <p style="text-align: center"><img src="../static/fu.png" align="middle"></p>
+    <h1 style="text-align: center">{% if name %}{{ name }}{% else %}陌生人{% endif %}，过年好！</h1>
+    <p style="text-align: center">当前时间是: {{ time }}</p>
+    <p style="text-align: center">That was {{ moment(current_utctime).fromNow(refresh=True) }}.</p>
+    <p style="text-align: center">距离过年还有: {{ count_days }} 天 {{ count_hours }} 小时 {{ count_minutes }} 分 {{ count_seconds }} 秒</p>
+{% endblock %}
