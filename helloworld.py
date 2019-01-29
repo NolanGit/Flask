@@ -2,7 +2,7 @@ import os
 import time
 import datetime
 from flask import Flask
-from flask import request, redirect, url_for
+from flask import request, redirect, url_for, session, flash
 from flask_moment import Moment
 from flask_wtf import FlaskForm
 from flask import render_template
@@ -41,11 +41,13 @@ def index():
     name = None
     form = NameForm()
     if form.validate_on_submit():
-        name = form.name.data
-        form.name.data = ''
+        old_name = session.get('name')
+        if old_name is not None and old_name != form.name.data:
+            flash('您似乎更改了名字！')
+        session['name'] = form.name.data
         return redirect(url_for('new_year'))
-    return render_template('index.html', form=form, name=name)
-
+    return render_template('index.html', form=form, name=session.get('name'))
+    
 
 @app.route('/new_year')
 def new_year():
@@ -62,7 +64,7 @@ def new_year():
     if count_hours > 24:
         count_hours = count_hours - 24
     templateData = {
-        'name': name,
+        'name': session.get('name'),
         'time': current_time,
         'count_days': day,
         'count_hours': count_hours,
@@ -72,20 +74,22 @@ def new_year():
     }
     return render_template('new_year.html', **templateData)
 
+
 @app.route('/tools')
 def tools():
+    #flash('Loading...')
     for x in range(100):
         current_ip = os.popen("curl icanhazip.com").read()
         current_ip = str(current_ip.replace("\n", ""))
-        if current_ip != None and current_ip !='':
+        if current_ip != None and current_ip != '':
             break
         else:
             print("WARNING: Current extranet IP is : " + current_ip)
             raise Exception("Bad requests !")
     print("Current extranet IP is : " + current_ip)
-    templateData = {
-        'ip': current_ip
-    }
+    templateData = {'ip': current_ip}
     return render_template('tools.html', **templateData)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
