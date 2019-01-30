@@ -1,12 +1,9 @@
 import os
 import time
 import datetime
-from flask import Flask
-from flask import request, redirect, url_for, session, flash
+from flask import Flask,request, render_template,redirect, url_for, session, flash,send_from_directory
 from flask_moment import Moment
 from flask_wtf import FlaskForm
-from flask import render_template
-from flask import send_from_directory
 from flask_bootstrap import Bootstrap
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
@@ -15,9 +12,9 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
-app.config['SECRET_KEY'] = 'hard to guess string'
+app.config['SECRET_KEY'] = 'hard to guess string!'
+app.config['SQLALCHEMY_DATABASE_URI'] ="mysql+pymysql://root:root@localhost:3306/data_test"
 
-global name
 
 
 class NameForm(FlaskForm):
@@ -37,8 +34,6 @@ def internal_server_error(e):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    global name
-    name = None
     form = NameForm()
     if form.validate_on_submit():
         old_name = session.get('name')
@@ -51,7 +46,6 @@ def index():
 
 @app.route('/new_year')
 def new_year():
-    global name
     spring_festival = datetime.datetime(2019, 2, 5, 0, 0, 0)
     current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     today = datetime.datetime.now()
