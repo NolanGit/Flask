@@ -7,15 +7,16 @@ from flask_wtf import FlaskForm
 from flask_bootstrap import Bootstrap
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-bootstrap = Bootstrap(app)
-moment = Moment(app)
-
 app.config['SECRET_KEY'] = 'hard to guess string!'
 app.config['SQLALCHEMY_DATABASE_URI'] ="mysql+pymysql://root:root@localhost:3306/data_test"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
+bootstrap = Bootstrap(app)
+moment = Moment(app)
+db = SQLAlchemy(app)
 
 class NameForm(FlaskForm):
     name = StringField('请输入您的名字，查看春节倒计时：', validators=[DataRequired()])
