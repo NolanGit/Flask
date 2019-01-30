@@ -1,7 +1,7 @@
 import os
 import time
 import datetime
-from flask import Flask,request, render_template,redirect, url_for, session, flash,send_from_directory
+from flask import Flask, request, render_template, redirect, url_for, session, flash, send_from_directory
 from flask_moment import Moment
 from flask_wtf import FlaskForm
 from flask_bootstrap import Bootstrap
@@ -11,12 +11,13 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string!'
-app.config['SQLALCHEMY_DATABASE_URI'] ="mysql+pymysql://root:root@localhost:3306/data_test"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:root@localhost:3306/data_test"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
+
 
 class NameForm(FlaskForm):
     name = StringField('请输入您的名字，查看春节倒计时：', validators=[DataRequired()])
@@ -43,7 +44,7 @@ def index():
         session['name'] = form.name.data
         return redirect(url_for('new_year'))
     return render_template('index.html', form=form, name=session.get('name'))
-    
+
 
 @app.route('/new_year')
 def new_year():
@@ -84,6 +85,20 @@ def tools():
     print("Current extranet IP is : " + current_ip)
     templateData = {'ip': current_ip}
     return render_template('tools.html', **templateData)
+
+
+@app.route('/nextcloud')
+def nextcloud():
+    for x in range(100):
+        current_ip = os.popen("curl icanhazip.com").read()
+        current_ip = str(current_ip.replace("\n", ""))
+        if current_ip != None and current_ip != '':
+            break
+        else:
+            print("WARNING: Current extranet IP is : " + current_ip)
+            raise Exception("Bad requests !")
+    templateData = {'link': 'http://' + current_ip + ':8001'}
+    return render_template('nextcloud.html', **templateData)
 
 
 if __name__ == '__main__':
