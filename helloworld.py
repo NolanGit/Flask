@@ -1,6 +1,8 @@
 import os
 import time
+import pymysql
 import datetime
+
 from flask import Flask, request, render_template, redirect, url_for, session, flash, send_from_directory
 from flask_moment import Moment
 from flask_wtf import FlaskForm
@@ -18,6 +20,24 @@ bootstrap = Bootstrap(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
 
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    users = db.relationship('User', backref='role')
+
+    def __repr__(self):
+        return '<Role %r>' % self.name
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True, index=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
 class NameForm(FlaskForm):
     name = StringField('请输入您的名字，查看春节倒计时：', validators=[DataRequired()])
@@ -48,7 +68,7 @@ def index():
 
 @app.route('/new_year')
 def new_year():
-    spring_festival = datetime.datetime(2019, 2, 5, 0, 0, 0)
+    spring_festival = datetime.datetime(2020, 1, 24, 0, 0, 0)
     current_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     today = datetime.datetime.now()
     day = (spring_festival - today).days
