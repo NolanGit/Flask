@@ -2,11 +2,13 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.sqlite
+config.py
 # C extensions
 *.so
-flask.config
 nohup.out
+.sqlite
+
 # Distribution / packaging
 .Python
 build/

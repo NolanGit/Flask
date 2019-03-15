@@ -6,7 +6,15 @@
 {{ super() }}
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
 {% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+{% endblock %}
+
 
 {% block navbar %}
 <div class="navbar navbar-inverse" role="navigation">
@@ -18,15 +26,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Nolan Sun's Site</a>
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">CRM Tools</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/new_year">New Year</a></li>
-                <li><a href="/app_price">APP Price</a></li>
-                <li><a href="/tools">Tools</a></li>
-                <li><a href="/nextcloud">Cloud Drive</a></li>
+                <li><a href="{{ url_for('tools.system_recorder') }}">System Recorder</a></li>
+                <li><a href="{{ url_for('main.readme') }}">ReadMe</a></li>
             </ul>
         </div>
     </div>
@@ -43,14 +48,8 @@
     {% endfor %}
     {% block page_content %}{% endblock %}
 </div>
-<div class="page-header">
-    <h1></h1>
-</div>
-<p style="text-align: center"><img src="../static/github.png" height="25" width="25"><a href="https://github.com/shr1213">GitHub</a></p>
+<hr>
+<p style="text-align: center"><img src="../static/github.png" height="25" width="25"><a href="https://github.com/">GitHub</a></p>
 {% endblock %}
 
 
-{% block scripts %}
-{{ super() }}
-{{ moment.include_moment() }}
-{% endblock %}

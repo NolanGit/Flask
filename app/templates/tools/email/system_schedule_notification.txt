@@ -1,0 +1,9 @@
+你好：
+当前系统的使用情况为：
+
+    {%for content in content_list%}
+    <td>{{content}}<br /></td>
+    {%endfor%}
+
+祝好！
+Note: replies to this email address are not monitored.
