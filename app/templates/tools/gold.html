@@ -49,19 +49,19 @@
 			success: function (data) {
 				if (data) {
 					for (var i = 0; i < data["data"].length; i++) {
-						names.push(data["data"][i]["name"]);
+						names.push(data["data"][i]["date"]);
 					}
 					for (var i = 0; i < data["data"].length; i++) {
-						nums.push(data["data"][i]["num"]);
+						nums.push(data["data"][i]["price"]);
 					}
 					myChart.hideLoading();
 					myChart.setOption({
 						xAxis: {
-							data: names
+							data: date
 						},
 						series: [{
-							name: '数量',
-							data: nums
+							name: '价格',
+							data: price
 						}]
 					});
 
