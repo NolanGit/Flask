@@ -18,14 +18,17 @@
 <script type="text/javascript">
 	var a = echarts;
 	var myChart = a.init(document.getElementById('main'));
-	// 显示标题，图例和空的坐标轴
 	myChart.setOption({
+	title: {
+        text: 'APP价格',
+        subtext: '数据来自网络'
+    },
     xAxis: {
-		name: 'price',
+		name: '价格',
         type: 'value'
     },
     yAxis: {
-		name: 'name',
+		name: '名称',
 		type: 'category'
     },
     series: [{
