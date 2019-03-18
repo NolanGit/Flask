@@ -32,3 +32,18 @@ def goldDetail():
     content = json.dumps(datas)
     resp = Response_headers(content)
     return (resp)
+
+@tools.route('/app', methods=['GET', 'POST'])
+def app():
+    return render_template('tools/app.html')
+
+@tools.route('/appDetail', methods=['GET'])
+def appDetail():
+    datas = {"data":[]}
+    app_price=GoldPrice.select().where(GoldPrice.crawling_times==1)
+    for price in app_price:
+        datas['data'].append({'date':str(price.date),'price':price.price})
+    print(datas)
+    content = json.dumps(datas)
+    resp = Response_headers(content)
+    return (resp)
