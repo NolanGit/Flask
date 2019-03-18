@@ -22,10 +22,7 @@
 	myChart.setOption({
     xAxis: {
 		name: 'price',
-        type: 'value',
-        interval:0,
-		min: '0',
-		max: '80'
+        type: 'value'
     },
     yAxis: {
 		name: 'name',
@@ -33,8 +30,7 @@
     },
     series: [{
         data: [],
-        type: 'bar',
-        smooth: true
+        type: 'bar'
     }]
 });
 	myChart.showLoading();  //数据加载完之前先显示一段简单的loading动画
