@@ -21,12 +21,14 @@
 	// 显示标题，图例和空的坐标轴
 	myChart.setOption({
     xAxis: {
-        type: 'category',
+		name: 'name',
+        type: 'value',
         interval:0,
         data: []
     },
     yAxis: {
-		type: 'value',
+		price: 'name',
+		type: 'category',
 		min: '0',
 		max: '80'
     },
