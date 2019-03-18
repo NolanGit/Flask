@@ -38,13 +38,14 @@ def app():
 @tools.route('/appDetail', methods=['GET'])
 def appDetail():
     datas = {"data":[]}
-    app_price=AppPrice.select().order_by(-AppPrice.date).limit(10).where()
+    app_price=AppPrice.select().limit(1).order_by(-AppPrice.id).where(AppPrice.date==datetime.datetime.now().date())
     for price in app_price:
-        print(price)
-    '''
-        datas['data'].append({'date':str(price.date),'price':price.price})
+        today_crawling_time=price.crawling_times
+    app_price=AppPrice.select().order_by(AppPrice.id).where((AppPrice.date==datetime.datetime.now().date())&(AppPrice.crawling_times==today_crawling_time))
+    for price in app_price:
+        datas['data'].append({'date':str(price.app_name),'price':price.price})
     print(datas)
     content = json.dumps(datas)
     resp = Response_headers(content)
     return (resp)
-    '''
+    
