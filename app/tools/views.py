@@ -22,7 +22,7 @@ def Response_headers(content):
 def gold():
     return render_template('tools/gold.html')
 
-@tools.route('/goldDetail')
+@tools.route('/goldDetail', methods=['GET'])
 def goldDetail():
     datas = {"data":[]}
     gold_price=GoldPrice.select().where('crawling_times'==1)
