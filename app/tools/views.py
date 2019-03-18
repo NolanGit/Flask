@@ -25,22 +25,10 @@ def gold():
 @tools.route('/goldDetail', methods=['GET'])
 def goldDetail():
     datas = {"data":[]}
-    gold_price=GoldPrice.select().where('crawling_times'==1)
+    gold_price=GoldPrice.select().where(GoldPrice.crawling_times==1)
     for price in gold_price:
         datas['data'].append({'date':price.date,'price':price.price})
     print(datas)
-    datas = {
-		"data":[
-			{"name":"allpe","num":100},
-			{"name":"peach","num":123},
-			{"name":"Pear","num":234},
-			{"name":"avocado","num":20},
-			{"name":"cantaloupe","num":1},
-			{"name":"Banana","num":77},
-			{"name":"Grape","num":43},
-			{"name":"apricot","num":0}
-		]
-	}
     content = json.dumps(datas)
     resp = Response_headers(content)
     return (resp)
