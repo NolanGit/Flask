@@ -38,7 +38,7 @@ def app():
 @tools.route('/appDetail', methods=['GET'])
 def appDetail():
     datas = {"data":[]}
-    app_price=AppPrice.select().order_by(-AppPrice.date).order_by(-AppPrice.time).limit(1)
+    app_price=AppPrice.select().order_by(-AppPrice.date).order_by(-AppPrice.time).limit(10).where()
     for price in app_price:
         print(price)
     '''
