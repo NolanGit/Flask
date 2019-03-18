@@ -22,7 +22,7 @@ def gold():
 
 @tools.route('/goldDetail', methods=['GET'])
 def goldDetail():
-    datas = {"data":[]}
+    datas = {'data':[]}
     gold_price=GoldPrice.select().where(GoldPrice.crawling_times==0)
     for price in gold_price:
         datas['data'].append({'date':str(price.date),'price':price.price})
@@ -37,10 +37,14 @@ def app():
 
 @tools.route('/appDetail', methods=['GET'])
 def appDetail():
-    datas = {"data":[]}
+    datas = {'data':[]}
     app_price=AppPrice.select().limit(1).order_by(-AppPrice.id).where(AppPrice.date==datetime.datetime.now().date())
     for price in app_price:
         today_crawling_time=price.crawling_times
+        price_time=price.time
+        price_date=price.date
+    datas['price_time']=str(price_time)
+    datas['price_date']=str(price_date)
     app_price=AppPrice.select().order_by(AppPrice.id).where((AppPrice.date==datetime.datetime.now().date())&(AppPrice.crawling_times==today_crawling_time))
     for price in app_price:
         datas['data'].append({'name':str(price.app_name),'price':price.price})
