@@ -11,8 +11,6 @@ from ..models import User, System, SysDate
 from ..data_models import AppPrice,GoldPrice
 from ..email import send_email
 from . import tools
-
-
 def Response_headers(content):
     resp = Response(content)
     resp.headers['Access-Control-Allow-Origin'] = '*'
@@ -25,7 +23,7 @@ def gold():
 @tools.route('/goldDetail', methods=['GET'])
 def goldDetail():
     datas = {"data":[]}
-    gold_price=GoldPrice.select().where(GoldPrice.crawling_times==1)
+    gold_price=GoldPrice.select().where(GoldPrice.crawling_times==0)
     for price in gold_price:
         datas['data'].append({'date':str(price.date),'price':price.price})
     print(datas)
@@ -40,10 +38,13 @@ def app():
 @tools.route('/appDetail', methods=['GET'])
 def appDetail():
     datas = {"data":[]}
-    app_price=GoldPrice.select().where(GoldPrice.crawling_times==1)
+    app_price=AppPrice.select().order_by(-AppPrice.date).order_by(-AppPrice.time).limit(1)
     for price in app_price:
+        print(price)
+    '''
         datas['data'].append({'date':str(price.date),'price':price.price})
     print(datas)
     content = json.dumps(datas)
     resp = Response_headers(content)
     return (resp)
+    '''
