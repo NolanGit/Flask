@@ -27,7 +27,7 @@
         data: []
     },
     yAxis: {
-		price: 'name',
+		name: 'price',
 		type: 'category',
 		min: '0',
 		max: '80'
@@ -40,7 +40,7 @@
 });
 	myChart.showLoading();  //数据加载完之前先显示一段简单的loading动画
 	var names = [];  //名称数组（实际用来盛放X轴坐标值）
-	var nums = [];  //数量数组（实际用来盛放Y坐标值）
+	var price = [];  //数量数组（实际用来盛放Y坐标值）
 	$(document).ready(function () {
 		getData();
 	});
@@ -54,10 +54,10 @@
 			success: function (data) {
 				if (data) {
 					for (var i = 0; i < data["data"].length; i++) {
-						names.push(data["data"][i]["date"]);
+						names.push(data["data"][i]["name"]);
 					}
 					for (var i = 0; i < data["data"].length; i++) {
-						nums.push(data["data"][i]["price"]);
+						price.push(data["data"][i]["price"]);
 					}
 					myChart.hideLoading();
 					myChart.setOption({
@@ -65,8 +65,7 @@
 							data: names
 						},
 						series: [{
-							name: '价格',
-							data: nums
+							data: price
                         }],
                         
 					});
