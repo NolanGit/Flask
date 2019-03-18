@@ -27,7 +27,7 @@ def goldDetail():
     datas = {"data":[]}
     gold_price=GoldPrice.select().where(GoldPrice.crawling_times==1)
     for price in gold_price:
-        datas['data'].append({'date':price.date,'price':price.price})
+        datas['data'].append({'date':str(price.date),'price':price.price})
     print(datas)
     content = json.dumps(datas)
     resp = Response_headers(content)
