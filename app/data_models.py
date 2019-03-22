@@ -7,10 +7,10 @@ database = peewee.SqliteDatabase(PATH("../../ServerTools/database.db"))
 
 
 class GoldPrice(peewee.Model):
+
     '''
         price, date, crawling_times, time
     '''
-
     price = peewee.CharField()
     date = peewee.DateField()
     crawling_times = peewee.IntegerField()
@@ -19,11 +19,25 @@ class GoldPrice(peewee.Model):
     class Meta:
         database = database
 
+
+class App(peewee.Model):
+
+    '''
+        app_name, expect_price
+    '''
+    app_name = peewee.CharField()
+    expect_price = peewee.IntegerField()
+
+    class Meta:
+        database = database
+
+
 class AppPrice(peewee.Model):
+
     '''
         app name, price, date, crawling_times, time
     '''
-    app_name= peewee.CharField()
+    app_name = peewee.CharField()
     price = peewee.CharField()
     date = peewee.DateField()
     crawling_times = peewee.IntegerField()
