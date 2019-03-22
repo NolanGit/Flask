@@ -4,47 +4,60 @@
 {% block title %}Nolan Sun's Site{% endblock %}
 
 {% block scripts %}
-	{{ super() }}
+{{ super() }}
 {% endblock %}
 
 {% block page_content %}
+
 <head>
 	<script type="text/javascript" src="http://echarts.baidu.com/dist/echarts.js"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 </head>
+
 <body>
-	<div id="main" style="text-align:center; height:100%; width:100%; max-width:900px; height:500px;"></div>
+	<div id="mainEcharts" style="text-align:center; height:100%; width:100%; max-width:900px; height:500px;"></div>
+	<table id="table_id" class="table table-hover stripe dataTable">
+		<thead>
+			<tr>
+				<th class="text-center">id</th>
+				<th class="text-center">名称</th>
+				<th class="text-center">期望</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
 </body>
 <script type="text/javascript">
 	var a = echarts;
-	var myChart = a.init(document.getElementById('main'));
+	var myChart = a.init(document.getElementById('mainEcharts'));
 	myChart.setOption({
-    xAxis: {
-		name: '价格',
-        type: 'value'
-    },
-    yAxis: {
-		name: '名称',
-		type: 'category'
-    },
-    series: [{
-        data: [],
-        type: 'bar'
-	}],
-	tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'shadow'
-        }
-    },
-	axisLabel: { 
-		interval:0, 
-		rotate:40 
-	},
-	grid: {
-        containLabel: true
-    },
-});
+		xAxis: {
+			name: '价格',
+			type: 'value'
+		},
+		yAxis: {
+			name: '名称',
+			type: 'category'
+		},
+		series: [{
+			data: [],
+			type: 'bar'
+		}],
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow'
+			}
+		},
+		axisLabel: {
+			interval: 0,
+			rotate: 40
+		},
+		grid: {
+			containLabel: true
+		},
+	});
 	myChart.showLoading();  //数据加载完之前先显示一段简单的loading动画
 	var names = [];  //名称数组（实际用来盛放X轴坐标值）
 	var price = [];  //数量数组（实际用来盛放Y坐标值）
@@ -69,7 +82,7 @@
 					myChart.hideLoading();
 					myChart.setOption({
 						title: {
-							text: 'APP价格【更新时间：'+data['price_date']+' '+data['price_time']+'】'
+							text: 'APP价格【更新时间：' + data['price_date'] + ' ' + data['price_time'] + '】'
 						},
 						yAxis: {
 							data: names
@@ -84,8 +97,8 @@
 								];
 								return colorList[params.dataIndex]
 							}
-                        }],
-                        
+						}],
+
 					});
 
 				}
@@ -98,5 +111,83 @@
 			}
 		})
 	}
+
+	$('#table_id').DataTable({
+		"paging": false,
+		"searching": false,
+		"info": false,
+		"ordering": false,
+		language: {
+			"lengthMenu": '每页显示<select class="form-control input-xsmall">' + '<option value="10">10</option>'
+				+ '<option value="20">20</option>'
+				+ '<option value="30">30</option>'
+				+ '<option value="40">40</option>'
+				+ '<option value="50">50</option>' + '</select>条',
+			"paginate": {
+				"first": "首页",
+				"last": "尾页",
+				"previous": "上一页",
+				"next": "下一页"
+			},
+			"processing": "加载中...",  //DataTables载入数据时，是否显示‘进度’提示  
+			"emptyTable": "暂无数据",
+			"info": "共 _PAGES_ 页  _TOTAL_ 条数据  ",
+			"infoEmpty": "暂无数据",
+			"emptyTable": "暂无要处理的数据...",  //表格中无数据
+			"infoFiltered": " —— 从  _MAX_ 条数据中筛选",
+			"zeroRecords": "没有找到记录"
+
+		},
+		ajax: "{{ url_for('tools.appCounts') }}",
+		columns: [
+			{
+				"data": "id",
+				"name": "id",
+				"sDefaultContent": "",  //默认空字符串
+				"sClass": "text-center"
+			},
+			{
+				"data": "app_name",
+				"sDefaultContent": "",  //默认空字符串
+				"sClass": "text-center"
+			},
+			{
+				"orderable": false,
+				"data": "expect_price",
+				'sClass': "text-center"
+			},
+			{
+				"data": null,
+				'sClass': "text-center"
+			},
+		],
+		columnDefs: [
+			{
+				targets: 3,
+				render: function (data, type, row) {
+					var id = '"' + row.id + '"';
+					var html = "<a  onclick='showModal(" + id + ")'  class='button button-rounded button-primary button-tiny'><i class='fa fa-trash-o'></i> 删除</a>"
+					return html;
+				}
+			}
+		],
+	});
+	function showModal(id) {
+		window.deleteID;
+		window.deleteID = id;
+		$('#myModal').modal();
+	}
+	function deleteRow() {
+		url = "{{ url_for('tools.appDelete') }}" + "?schedule_id=" + deleteID;
+		$.ajax({
+			url: url,
+			type: "POST",
+			success: function (data) {
+				alert(data)
+				window.location.replace("{{ url_for('tools.app') }}")
+			},
+		})
+	};
+
 </script>
 {% endblock %}
