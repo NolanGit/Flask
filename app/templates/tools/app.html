@@ -143,18 +143,24 @@
 					targets: 3,
 					render: function (data, type, row) {
 						var id = '"' + row.id + '"';
-						var html = "<a  onclick='showModal(" + id + ")'  class='button button-rounded button-primary button-tiny'><i class='fa fa-trash-o'></i> 删除</a>"
+						var html = "<a  onclick='showDeleteModal(" + id + ")'  class='button button-rounded button-primary button-tiny'><i class='fa fa-trash-o'></i> 删除</a>"
+                        html += "<a  onclick='showEditModal(" + id + ")'  class='button button-rounded button-primary button-tiny'><i class='fa fa-edit'></i> 编辑(不好使)</a>"
 						return html;
 					}
 				}
 			],
 		});
 	})
-	function showModal(id) {
-		window.deleteID;
-		window.deleteID = id;
-		$('#myModal').modal();
-	}
+    function showDeleteModal(id) {
+        window.deleteID;
+        window.deleteID = id;
+        $('#myDeleteModal').modal();
+    }
+    function showEditModal(id) {
+        window.EditID;
+        window.EditID = id;
+        $('#myEditModal').modal();
+    }
 	function deleteRow() {
 		url = "{{ url_for('tools.appDelete') }}" + "?schedule_id=" + deleteID;
 		$.ajax({
@@ -192,5 +198,64 @@
 		</tbody>
 	</table>
 </body>
+
+<div class="modal fade" id="myDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel"
+aria-hidden="true">
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+			</button>
+			<h4 class="modal-title" id="myDeleteModalLabel">
+				提示
+			</h4>
+		</div>
+		<div class="modal-body">
+			确认删除？
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="button button-rounded button-small" data-dismiss="modal">
+				<i class="fa fa-close"></i>
+				取消
+			</button>
+			<button type="button" class="button button-caution button-rounded button-small" data-dismiss="modal"
+				onclick="editRow()">
+				<i class="fa fa-check"></i>
+				确认
+			</button>
+		</div>
+	</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" id="myEditModal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel"
+aria-hidden="true">
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
+			</button>
+			<h4 class="modal-title" id="myEditModalLabel">
+				提示
+			</h4>
+		</div>
+		<div class="modal-body">
+			确认删除？
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="button button-rounded button-small" data-dismiss="modal">
+				<i class="fa fa-close"></i>
+				取消
+			</button>
+			<button type="button" class="button button-caution button-rounded button-small" data-dismiss="modal"
+				onclick="deleteRow()">
+				<i class="fa fa-check"></i>
+				确认
+			</button>
+		</div>
+	</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 {% endblock %}
