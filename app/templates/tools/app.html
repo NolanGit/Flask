@@ -149,12 +149,12 @@
 				}
 			],
 		});
-		function showModal(id) {
-			window.deleteID;
-			window.deleteID = id;
-			$('#myModal').modal();
-		}
 	})
+	function showModal(id) {
+		window.deleteID;
+		window.deleteID = id;
+		$('#myModal').modal();
+	}
 	function deleteRow() {
 		url = "{{ url_for('tools.appDelete') }}" + "?schedule_id=" + deleteID;
 		$.ajax({
@@ -185,7 +185,7 @@
 				<th class="text-center">id</th>
 				<th class="text-center">名称</th>
 				<th class="text-center">期望</th>
-				<th class="text-center"></th>
+				<th class="text-center">操作</th>
 			</tr>
 		</thead>
 		<tbody>
