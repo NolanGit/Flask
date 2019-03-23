@@ -5,29 +5,6 @@
 
 {% block scripts %}
 {{ super() }}
-{% endblock %}
-
-{% block page_content %}
-
-<head>
-	<script type="text/javascript" src="http://echarts.baidu.com/dist/echarts.js"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-</head>
-
-<body>
-	<div id="mainEcharts" style="text-align:center; height:100%; width:100%; max-width:900px; height:500px;"></div>
-	<table id="table_id" class="table table-hover stripe dataTable">
-		<thead>
-			<tr>
-				<th class="text-center">id</th>
-				<th class="text-center">名称</th>
-				<th class="text-center">期望</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-</body>
 <script type="text/javascript">
 	var a = echarts;
 	var myChart = a.init(document.getElementById('mainEcharts'));
@@ -190,4 +167,28 @@
 	};
 
 </script>
+{% endblock %}
+
+{% block page_content %}
+
+<head>
+	<script type="text/javascript" src="http://echarts.baidu.com/dist/echarts.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+</head>
+
+<body>
+	<div id="mainEcharts" style="text-align:center; height:100%; width:100%; max-width:900px; height:500px;"></div>
+	<table id="table_id" class="table table-hover stripe dataTable">
+		<thead>
+			<tr>
+				<th class="text-center">id</th>
+				<th class="text-center">名称</th>
+				<th class="text-center">期望</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</body>
+
 {% endblock %}
