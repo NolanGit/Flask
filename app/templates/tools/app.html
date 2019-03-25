@@ -161,10 +161,8 @@
 		window.EditID = id;
 		$('#myEditModal').modal();
 	}
-	function showNewModal(id) {
-		window.EditID;
-		window.EditID = id;
-		$('#myNewModal').modal();
+	function showNewModal() {
+		$('#myEditModal').modal();
 	}
 	function deleteRow() {
 		url = "{{ url_for('tools.appDelete') }}" + "?schedule_id=" + deleteID;
@@ -177,7 +175,59 @@
 			},
 		})
 	};
+    function check_form()
+    {
+        var user_id = $.trim($('#user_id').val());
+        var act     = $.trim($('#act').val());
 
+        if(!user_id)
+        {
+            alert('用户ID不能为空！');
+            return false;
+        }
+           var form_data = $('#form_data').serialize();
+
+        // 异步提交数据到action/add_action.php页面
+        $.ajax(
+                {
+                    url: "{{ url_for('tools.appEdit') }}",
+                    data:{"form_data":form_data,"act":act},
+                    type: "post",
+                    beforeSend:function()
+                    {
+                        $("#tip").html("<span style='color:blue'>正在处理...</span>");
+                        return true;
+                    },
+                    success:function(data)
+                    {
+                        if(data > 0)
+                        {
+
+                            var msg = "添加";
+                            if(act == "edit") msg = "编辑";
+                            $("#tip").html("<span style='color:blueviolet'>恭喜，" +msg+ "成功！</span>");
+                            // document.location.href='system_notice.php'
+                            alert(msg + "OK！");
+                            location.reload();
+                        }
+                        else
+                        {
+                            $("#tip").html("<span style='color:red'>失败，请重试</span>");
+                            alert('操作失败');
+                        }
+                    },
+                    error:function()
+                    {
+                        alert('请求出错');
+                    },
+                    complete:function()
+                    {
+                        $('#acting_tips').hide();
+                    }
+                });
+
+        return false;
+    }
 </script>
 {% endblock %}
 
@@ -226,36 +276,6 @@
 					取消
 				</button>
 				<button type="button" class="button button-caution button-rounded button-small" data-dismiss="modal"
-					onclick="editRow()">
-					<i class="fa fa-check"></i>
-					确认
-				</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<div class="modal fade" id="myEditModal" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel"
-	aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
-				</button>
-				<h4 class="modal-title" id="myEditModalLabel">
-					提示
-				</h4>
-			</div>
-			<div class="modal-body">
-				确认删除？
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="button button-rounded button-small" data-dismiss="modal">
-					<i class="fa fa-close"></i>
-					取消
-				</button>
-				<button type="button" class="button button-caution button-rounded button-small" data-dismiss="modal"
 					onclick="deleteRow()">
 					<i class="fa fa-check"></i>
 					确认
@@ -268,7 +288,7 @@
 
 <form method="post" action="" class="form-horizontal" role="form" id="form_data" onsubmit="return check_form()"
 	style="margin: 20px;">
-	<div class="modal fade" id="myNewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	<div class="modal fade" id="myEditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -283,18 +303,18 @@
 				<div class="modal-body">
 					<form class="form-horizontal" role="form">
 						<div class="form-group">
-							<label for="user_id" class="col-sm-3 control-label">名称</label>
+							<label for="app_name" class="col-sm-3 control-label">名称</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="user_id" name="user_id" value="{user_id}"
+								<input type="text" class="form-control" id="app_name" name="app_name" value="{app_name}"
 									placeholder="请输入名称">
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label for="lastname" class="col-sm-3 control-label">期望</label>
+							<label for="expect_price" class="col-sm-3 control-label">期望</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" name="user_name" value="{user_id}"
-									id="user_name" placeholder="期望">
+								<input type="text" class="form-control" name="expect_price" value="{expect_price}"
+									id="expect_price" placeholder="期望">
 							</div>
 						</div>
 					</form>

@@ -70,10 +70,9 @@ def appCounts():
 
 @tools.route('/appDelete', methods=['POST'])
 def appDelete():
-    datas = {'data': []}
-    app_query = App.select()
-    for app in app_query:
-        datas['data'].append({'id': str(app.id), 'app_name': str(app.app_name), 'expect_price': app.expect_price})
-    content = json.dumps(datas)
-    resp = Response_headers(content)
-    return (resp)
+    pass
+
+@tools.route('/appEdit', methods=['POST'])
+def appEdit():
+    username, password = request.form['app_name'], request.form.get('expect_price')
+    pass
