@@ -76,5 +76,5 @@ def appDelete():
 
 @tools.route('/appEdit', methods=['POST'])
 def appEdit():
-    username, password = request.form['app_name'], request.form.get('expect_price')
+    app_name, expect_price = request.form['app_name'], request.form.get('expect_price')
     pass
