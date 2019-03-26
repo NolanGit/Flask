@@ -94,18 +94,6 @@
 			"searching": false,
 			"info": false,
 			"ordering": false,
-			buttons: {
-				buttons: [
-					{
-						text: 'Alert',
-						className: 'button button-rounded button-primary button-small',
-						action: function (e, dt, node, config) {
-							alert('Activated!');
-							this.disable(); // disable button
-						}
-					}
-				]
-			},
 			language: {
 				"lengthMenu": '每页显示<select class="form-control input-xsmall">' + '<option value="10">10</option>'
 					+ '<option value="20">20</option>'
@@ -155,8 +143,10 @@
 					targets: 3,
 					render: function (data, type, row) {
 						var id = '"' + row.id + '"';
+						var app_name = '"' + row.app_name + '"';
+						var expect_price = '"' + row.expect_price + '"';
 						var html = "<a  onclick='showDeleteModal(" + id + ")'  class='button button-rounded button-primary button-tiny'><i class='fa fa-trash-o'></i> 删除</a>"
-						html += "<a  onclick='showEditModal(" + id + ")'  class='button button-rounded button-primary button-tiny'><i class='fa fa-edit'></i> 编辑</a>"
+						html += "<a  onclick='showEditModal(" + id + "," + app_name + "," + expect_price + ")'  class='button button-rounded button-primary button-tiny'><i class='fa fa-edit'></i> 编辑</a>"
 						return html;
 					}
 				}
@@ -168,9 +158,13 @@
 		window.deleteID = id;
 		$('#myDeleteModal').modal();
 	}
-	function showEditModal(id) {
+	function showEditModal(id, app_name, expect_price) {
 		window.EditID;
 		window.EditID = id;
+		window.EditAppName;
+		window.EditAppName = app_name;
+		window.EditExpectPrice;
+		window.EditExpectPrice = expect_price;
 		$('#myEditModal').modal();
 	}
 	function showNewModal() {
@@ -309,7 +303,7 @@
 						<div class="form-group">
 							<label for="app_name" class="col-sm-3 control-label">名称</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="app_name" name="app_name" value="{app_name}"
+								<input type="text" class="form-control" id="app_name" name="app_name" value="{EditAppName}"
 									placeholder="请输入名称">
 							</div>
 						</div>
@@ -317,7 +311,7 @@
 						<div class="form-group">
 							<label for="expect_price" class="col-sm-3 control-label">期望</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" name="expect_price" value="{expect_price}"
+								<input type="text" class="form-control" name="expect_price" value="{EditExpectPrice}"
 									id="expect_price" placeholder="期望">
 							</div>
 						</div>

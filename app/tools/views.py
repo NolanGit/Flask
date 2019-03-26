@@ -5,7 +5,7 @@ import peewee
 import random
 import datetime
 
-from flask import render_template, session, redirect, url_for, current_app, flash, Response
+from flask import render_template, session, redirect, url_for, current_app, flash, Response, request
 from .. import db
 from ..models import User, System, SysDate
 from ..data_models import App, AppPrice, GoldPrice
@@ -68,9 +68,11 @@ def appCounts():
     resp = Response_headers(content)
     return (resp)
 
+
 @tools.route('/appDelete', methods=['POST'])
 def appDelete():
     pass
+
 
 @tools.route('/appEdit', methods=['POST'])
 def appEdit():
