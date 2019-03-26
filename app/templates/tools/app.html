@@ -94,6 +94,18 @@
 			"searching": false,
 			"info": false,
 			"ordering": false,
+			buttons: {
+				buttons: [
+					{
+						text: 'Alert',
+						className: 'button button-rounded button-primary button-small',
+						action: function (e, dt, node, config) {
+							alert('Activated!');
+							this.disable(); // disable button
+						}
+					}
+				]
+			},
 			language: {
 				"lengthMenu": '每页显示<select class="form-control input-xsmall">' + '<option value="10">10</option>'
 					+ '<option value="20">20</option>'
@@ -175,59 +187,51 @@
 			},
 		})
 	};
-    function check_form()
-    {
-        var user_id = $.trim($('#user_id').val());
-        var act     = $.trim($('#act').val());
+	function check_form() {
+		var user_id = $.trim($('#user_id').val());
+		var act = $.trim($('#act').val());
 
-        if(!user_id)
-        {
-            alert('用户ID不能为空！');
-            return false;
-        }
-           var form_data = $('#form_data').serialize();
+		if (!user_id) {
+			alert('用户ID不能为空！');
+			return false;
+		}
+		var form_data = $('#form_data').serialize();
 
-        // 异步提交数据到action/add_action.php页面
-        $.ajax(
-                {
-                    url: "{{ url_for('tools.appEdit') }}",
-                    data:{"form_data":form_data,"act":act},
-                    type: "post",
-                    beforeSend:function()
-                    {
-                        $("#tip").html("<span style='color:blue'>正在处理...</span>");
-                        return true;
-                    },
-                    success:function(data)
-                    {
-                        if(data > 0)
-                        {
+		// 异步提交数据到action/add_action.php页面
+		$.ajax(
+			{
+				url: "{{ url_for('tools.appEdit') }}",
+				data: { "form_data": form_data, "act": act },
+				type: "post",
+				beforeSend: function () {
+					$("#tip").html("<span style='color:blue'>正在处理...</span>");
+					return true;
+				},
+				success: function (data) {
+					if (data > 0) {
 
-                            var msg = "添加";
-                            if(act == "edit") msg = "编辑";
-                            $("#tip").html("<span style='color:blueviolet'>恭喜，" +msg+ "成功！</span>");
-                            // document.location.href='system_notice.php'
-                            alert(msg + "OK！");
-                            location.reload();
-                        }
-                        else
-                        {
-                            $("#tip").html("<span style='color:red'>失败，请重试</span>");
-                            alert('操作失败');
-                        }
-                    },
-                    error:function()
-                    {
-                        alert('请求出错');
-                    },
-                    complete:function()
-                    {
-                        $('#acting_tips').hide();
-                    }
-                });
+						var msg = "添加";
+						if (act == "edit") msg = "编辑";
+						$("#tip").html("<span style='color:blueviolet'>恭喜，" + msg + "成功！</span>");
+						// document.location.href='system_notice.php'
+						alert(msg + "OK！");
+						location.reload();
+					}
+					else {
+						$("#tip").html("<span style='color:red'>失败，请重试</span>");
+						alert('操作失败');
+					}
+				},
+				error: function () {
+					alert('请求出错');
+				},
+				complete: function () {
+					$('#acting_tips').hide();
+				}
+			});
 
-        return false;
-    }
+		return false;
+	}
 </script>
 {% endblock %}
 
