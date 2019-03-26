@@ -165,6 +165,8 @@
 		window.EditAppName = app_name;
 		window.EditExpectPrice;
 		window.EditExpectPrice = expect_price;
+		document.getElementById("app_name").value = app_name;
+		document.getElementById("expect_price").value = app_name;
 		$('#myEditModal').modal();
 	}
 	function showNewModal() {
@@ -303,8 +305,8 @@
 						<div class="form-group">
 							<label for="app_name" class="col-sm-3 control-label">名称</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="app_name" name="app_name" value="{EditAppName}"
-									placeholder="请输入名称">
+								<input type="text" class="form-control" id="app_name" name="app_name"
+									value="{EditAppName}" placeholder="请输入名称">
 							</div>
 						</div>
 
