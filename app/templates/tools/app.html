@@ -166,7 +166,7 @@
 		window.EditExpectPrice;
 		window.EditExpectPrice = expect_price;
 		document.getElementById("app_name").value = app_name;
-		document.getElementById("expect_price").value = app_name;
+		document.getElementById("expect_price").value = expect_price;
 		$('#myEditModal').modal();
 	}
 	function showNewModal() {
@@ -305,16 +305,16 @@
 						<div class="form-group">
 							<label for="app_name" class="col-sm-3 control-label">名称</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" id="app_name" name="app_name"
-									value="{EditAppName}" placeholder="请输入名称">
+								<input type="text" class="form-control" id="app_name" name="app_name" value=""
+									placeholder="请输入名称">
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="expect_price" class="col-sm-3 control-label">期望</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control" name="expect_price" value="{EditExpectPrice}"
-									id="expect_price" placeholder="期望">
+								<input type="text" class="form-control" name="expect_price" value=" " id="expect_price"
+									placeholder="期望">
 							</div>
 						</div>
 					</form>
