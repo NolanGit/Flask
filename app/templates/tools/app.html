@@ -170,6 +170,8 @@
 		$('#myEditModal').modal();
 	}
 	function showNewModal() {
+		document.getElementById("app_name").value = null;
+		document.getElementById("expect_price").value = null;
 		$('#myEditModal').modal();
 	}
 	function deleteRow() {
@@ -314,7 +316,7 @@
 							<label for="expect_price" class="col-sm-3 control-label">期望</label>
 							<div class="col-sm-9">
 								<input type="text" class="form-control" name="expect_price" value=" " id="expect_price"
-									placeholder="期望">
+									placeholder="请输入期望">
 							</div>
 						</div>
 					</form>
