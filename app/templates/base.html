@@ -1,9 +1,4 @@
-{% extends "bootstrap/base.html" %}
-
-{% block title %}Flasky{% endblock %}
-
-{% block head %}
-{{ super() }}
+{% extends "bootstrap/base.html" %} {% block title %}Flasky{% endblock %} {% block head %} {{ super() }}
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ url_for('static', filename='apple-touch-icon-144x144.png') }}">
@@ -15,20 +10,13 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}">
-<link href="http://www.bootcss.com/p/buttons/css/buttons.css" rel="stylesheet" type="text/css" />
-{% endblock %}
-
-{% block scripts %}
-    {{ super() }}
-    <script src="{{ url_for('static', filename='js/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap-datepicker.zh-CN.min.js') }}"></script>
-    <script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/jquery.dataTables.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/bootbox.locales.min.js') }}"></script>
-{% endblock %}
-
-
-{% block navbar %}
+<link href="http://www.bootcss.com/p/buttons/css/buttons.css" rel="stylesheet" type="text/css" /> {% endblock %} {% block scripts %} {{ super() }}
+<script src="{{ url_for('static', filename='js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap-datepicker.zh-CN.min.js') }}"></script>
+<script type="text/javascript" charset="utf8" src="{{ url_for('static', filename='js/jquery.dataTables.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootbox.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootbox.locales.min.js') }}"></script>
+{% endblock %} {% block navbar %}
 <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -44,25 +32,19 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('tools.gold') }}">Gold Price</a></li>
                 <li><a href="{{ url_for('tools.app') }}">APP Price</a></li>
-                <li><a href="{{ url_for('main.readme') }}">ReadMe</a></li>
+                <li><a href="{{ url_for('tools.weather') }}">Weather</a></li>
             </ul>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="container">
     {% for message in get_flashed_messages() %}
     <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">&times;</button> {{ message }}
     </div>
-    {% endfor %}
-    {% block page_content %}{% endblock %}
+    {% endfor %} {% block page_content %}{% endblock %}
 </div>
 <hr>
 <p style="text-align: center"><img src="../static/github.png" height="25" width="25"><a href="https://github.com/">GitHub</a></p>
 {% endblock %}
-
-
